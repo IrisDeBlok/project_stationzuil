@@ -1,15 +1,66 @@
-# input()
+from datetime import datetime
+import random
 
-# print('Enter Your Name')
-# print(input())
+date = datetime.today()
+today = date.strftime("%d-%m-%Y %H:%M")
 
-x = input('Enter your name:')
-mijnlijst = ['Uw bericht', x]
+locationList = [
+                'Arnhem',
+                'Almere',
+                'Amersfoort',
+                'Almelo',
+                'Alkmaar',
+                'Apeldoorn',
+                'Assen',
+                'Amsterdam',
+                'Boxtel',
+                'Breda',
+                'Dordrecht',
+                'Delft',
+                'Deventer',
+                'Enschede',
+                'Gouda',
+                'Groningen',
+                'Den Haag',
+                'Hengelo',
+                'Haarlem',
+                'Helmond',
+                'Hoorn',
+                'Heerlen',
+                'Den Bosch',
+                'Hilversum',
+                'Leiden',
+                'Lelystad',
+                'Leeuwarden',
+                'Maastricht',
+                'Nijmegen',
+                'Oss',
+                'Roermond',
+                'Roosendaal',
+                'Sittard',
+                'Tilburg',
+                'Utrecht',
+                'Venlo',
+                'Vlissingen',
+                'Zaandam',
+                'Zwolle',
+                'Zutphen'
+                ]
+location = random.choice(locationList)
+name = input('Enter your name: ')
+message = input('Message: ')
 
-for word in mijnlijst:
-    print(input(word))
-
-if len(x) == 0:
-    print('Hallo, anoniem')
+if len(name) == 0:
+    print('Hello anoniem')
 else:
-    print('Hello, ' + x)
+    print('Hello ' + name)
+
+print('Date:', today)
+print('Location:', location)
+
+if len(message) == 0:
+    print('message needs to be filled')
+elif len(message) > 140:
+    print('message is too long. Keep it under 140 characters')
+else:
+    print('Message:', message)
