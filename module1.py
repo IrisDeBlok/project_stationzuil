@@ -10,20 +10,14 @@ DB_PASS = "Koeskoes123123!"
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
 cur = conn.cursor()
 
-date = time.strftime("%Y/%m/%d")
-time = time.strftime("%H:%M:%S")
+date = time.strftime("%Y/%m/%d %H:%M:%S")
+# time = time.strftime("%H:%M:%S")
 
-locationList = [
-                'Amsterdam',
-                'Gouda',
-                'Groningen',
-                'Den Haag',
-                'Den Bosch',
-                'Leeuwarden',
-                'Maastricht',
-                'Utrecht',
-                ]
-location = random.choice(locationList)
+def getStation():
+    with open('stations.txt', 'r') as station_file:
+        return random.choice(station_file.read().splitlines())
+
+location = getStation()
 name = input('Vul hier uw naam in: ')
 message = input('Vul hier uw bericht in: ')
 
@@ -33,7 +27,7 @@ def leavingMessage():
     else:
         print('Hallo ' + name)
 
-    print('Datum:', date, time)
+    print('Datum:', date)
     print('Locatie:', location)
 
     if len(message) == 0:
@@ -43,7 +37,7 @@ def leavingMessage():
     else:
         print('Bericht:', message)
 
-    cur.execute("INSERT INTO bericht(naam, datum, tijd, locatie, bericht) VALUES(%s, %s, %s, %s, %s);", (name, date, time, location, message))
+    cur.execute("INSERT INTO bericht(naam, datum, locatie, bericht) VALUES(%s, %s, %s, %s);", (name, date, location, message))
     conn.commit()
 
 leavingMessage()

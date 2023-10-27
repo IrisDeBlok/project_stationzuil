@@ -1,8 +1,7 @@
 import psycopg2
 import time
 
-date = time.strftime("%Y/%m/%d")
-time = time.strftime("%H:%M")
+date = time.strftime("%Y/%m/%d %H:%M")
 
 DB_HOST = "localhost"
 DB_NAME = "stationzuil"
@@ -18,23 +17,29 @@ def approvingMessage():
     # controleer op naam en email
     # als die er in staat, id pakken
     # anders in database zetten
-    cur.execute("SELECT * FROM bericht WHERE NOT EXISTS (SELECT goedkeuring.berichtid FROM goedkeuring WHERE bericht.berichtid = goedkeuring.berichtid)")
+    cur.execute("SELECT * FROM bericht WHERE NOT EXISTS (SELECT beoordeling.berichtid FROM beoordeling WHERE bericht.berichtid = beoordeling.berichtid)")
     berichten = cur.fetchall()
 
+
     for bericht in berichten:
-        cur.execute("SELECT * from moderator WHERE naam = %s", (name,))
+        berichtId = bericht[0]
+        cur.execute("SELECT * from moderator WHERE naam = %s AND email = %s", (name, email))
         activeModerators = cur.fetchall()
         for activeModerator in activeModerators:
-            print(activeModerator[0])
-            print(bericht[5])
-            goedkeuring = input("Wilt u dit bericht goedkeuren?(y/n)")
-            if goedkeuring == "y" or goedkeuring == "n":
-                cur.execute("INSERT INTO goedkeuring (berichtid, moderatorid, datum, tijd, goedkeuring) VALUES(%s, %s, %s, %s, %s);", (bericht[0], activeModerator[0], date, time, goedkeuring))
+            moderatorId = activeModerator[0]
+            print(bericht[4])
+            beoordeling = input("Wilt u dit bericht goedkeuren?(y/n)")
+            if beoordeling == "y":
+                cur.execute("INSERT INTO beoordeling (berichtid, moderatorid, datum, beoordeling) VALUES(%s, %s, %s, %s);", (berichtId, moderatorId, date, True))
                 conn.commit()
-            elif goedkeuring == "break" or goedkeuring == "exit" or goedkeuring == "stop":
+            elif beoordeling == "n":
+                cur.execute("INSERT INTO beoordeling (berichtid, moderatorid, datum, beoordeling) VALUES(%s, %s, %s, %s);", (berichtId, moderatorId, date, False))
+                conn.commit()
+            elif beoordeling == "break" or beoordeling == "exit" or beoordeling == "stop":
                 return
             else:
                 print("niet een juiste invoer")
+        # print("Geen nieuwe berichten!")
 
 
 
