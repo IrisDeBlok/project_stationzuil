@@ -13,10 +13,10 @@ nsGeel = "#FFC917"
 nsBlauw = "#003082"
 
 #db connectie
-DB_HOST = "localhost"
-DB_NAME = "stationzuil"
+DB_HOST = "13.93.31.162"
+DB_NAME = "stationszuil"
 DB_USER = "postgres"
-DB_PASS = "Koeskoes123123!"
+DB_PASS = "Hallo123"
 
 conn = psycopg2.connect(dbname=DB_NAME, user=DB_USER, password=DB_PASS, host=DB_HOST)
 cur = conn.cursor()
