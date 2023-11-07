@@ -52,9 +52,9 @@ layout = [
           sg.Text('', size=(7, 3), font=('Montserrat', 22), background_color=nsBlauw,
                  justification='c', key='-CLOCK-')], #actuele tijd
     ], background_color=nsBlauw, key="_COLUMN_")],
-    [sg.T('Uw naam:', key='-OUT-', expand_x=True, justification='center', background_color=nsBlauw)], #naam input label
+    [sg.T('Uw naam:', expand_x=True, justification='center', background_color=nsBlauw)], #naam input label
     [sg.Input('', enable_events=True, key='-NAME-', expand_x=True, justification='center')], #naam input
-    [sg.T('Uw bericht:', key='-OUT-', expand_x=True, justification='center', background_color=nsBlauw)], #bericht input label
+    [sg.T('Uw bericht:', expand_x=True, justification='center', background_color=nsBlauw)], #bericht input label
     [sg.Multiline('', enable_events=True, key='-MESSAGE-', size=(5, 5), no_scrollbar=True, expand_x=True, justification='c')], #bericht input
     [sg.T("*Dit bericht wordt nagekeken door een moderator en mag bestaan uit maximaal 140 karakters", expand_x=True, justification="c",
           background_color=nsGeel, text_color="black", font=("Montserrat", 10))], #tekst wat aangeeft wat er met het bericht gebeurt
